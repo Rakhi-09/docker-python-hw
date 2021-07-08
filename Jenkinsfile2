@@ -1,13 +1,15 @@
 node {
     checkout scm
     stage('Deploying Container') {
-            // default approach
+           
+        withDockerRegistry([ credentialsId: 'raakhi_docker']) {
+             // default approach
             def customImage = docker.build("raakhi/py-helloworld:${env.BUILD_ID}")
 
-            /* Push the container to the custom Registry */
+/* Push the container to the custom Registry */
             customImage.push()
             customImage.push('latest')
-        
+       } 
     }
 
 }
